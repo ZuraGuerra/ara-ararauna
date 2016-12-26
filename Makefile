@@ -22,11 +22,8 @@ SASS_FILES := $(shell find $(SASS_FOLDER) -name '*.scss')
 # · handlebars  #
 #---------------#
 
-#client: copy client/build/js/app.js client/build/css/app.css
-.PHONY: clean rebuild all sass copy
 ### ALL
 all: copy sass
-#all: copy %.handlebars %.scss
 
 ### CLEAN
 clean:
@@ -54,16 +51,4 @@ sass: $(SASS_FILES)
 		  $(addprefix $(BUILD_FOLDER)/css/, $(notdir $(basename $(file))).css);)
 			@# Transforms 'origin/css/example.scss' into 'destination/css/example.css'
 
-# # JavaScript concatenation with TypeScript
-# tsfiles = $(shell find client/src/js -name  '*.ts')
-# client/build/js/app.js: $(tsfiles)
-# 	mkdir -p client/build/js
-# 	tsc --sourceMap --out client/build/js/app.js client/src/js/app.ts
-#
-# # Directly copy files
-# copy: $(COPYDIRS)
-# $(COPYDIRS):
-# 	mkdir -p client/build
-# 	rsync -rupE client/src/$@ client/build
-#
-# .PHONY: client clean rebuild copy $(COPYDIRS)
+.PHONY: clean rebuild all sass copy $(COPY_FOLDERS)
