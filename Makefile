@@ -21,15 +21,14 @@ BUILD_FOLDER = build
 #---------------#
 
 #client: copy client/build/js/app.js client/build/css/app.css
-.PHONY: clean rebuild all sass
+.PHONY: clean rebuild all sass copy
 ### ALL
 all: sass
 #all: copy %.handlebars %.scss
 
 ### CLEAN
 clean:
-	rm *.css
-#rm -rf client/build
+	rm -rf $(BUILD_FOLDER)
 
 ### REBUILD
 rebuild: clean all
@@ -45,9 +44,12 @@ sass: $(SASS_FILES)
 		  $(addprefix $(BUILD_FOLDER)/css/, $(notdir $(basename $(file))).css);)
 			@# Transforms 'origin/css/example.scss' into 'destination/css/example.css'
 
-# ### COPY
-# copy: $(COPY_FOLDERS)
-# 	$(foreach folder, $(COPY_FOLDERS), )
+### COPY
+copy: $(COPY_FOLDERS)
+$(COPY_FOLDERS):
+	##### Copying assets...
+	mkdir -p $(COPY_FOLDERS)
+
 # # JavaScript concatenation with TypeScript
 # tsfiles = $(shell find client/src/js -name  '*.ts')
 # client/build/js/app.js: $(tsfiles)
