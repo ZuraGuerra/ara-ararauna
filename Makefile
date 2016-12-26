@@ -1,7 +1,7 @@
 # Sass compiler
 # ! Beware that changing the compiler might break this script
 # ! Modify the 'sass' task accordingly to your compiler usage
-SASS = sassc
+SASS_COMP = sassc
 SASS_FLAGS =
 SASS_FOLDER = src/css
 SASS_FILES := $(shell find $(SASS_FOLDER) -name '*.scss')
@@ -36,16 +36,18 @@ rebuild: clean all
 
 ### SASS
 sass: $(SASS_FILES)
+	##### Compiling Sass files...
 	mkdir -p $(BUILD_FOLDER)/css
-	$(foreach file,$(SASS_FILES), \
-	  $(SASS) $(SASS_FLAGS) $(file) $(addprefix $(BUILD_FOLDER)/css/, \
-		                               $(notdir $(basename $(file))).css);)
+	@# Current call structure: command [flags] [INPUT] [OUTPUT]
+	@# ! Depends on the compiler
+	$(foreach file, $(SASS_FILES), \
+	  $(SASS_COMP) $(SASS_FLAGS) $(file) \
+		  $(addprefix $(BUILD_FOLDER)/css/, $(notdir $(basename $(file))).css);)
+			@# Transforms 'origin/css/example.scss' into 'destination/css/example.css'
 
-# # SASS to CSS compilation
-# client/build/css/site.css: client/src/css/site.scss
-# 	mkdir -p client/build/css
-# 	sass client/src/css/site.scss > client/build/css/site.css
-#
+# ### COPY
+# copy: $(COPY_FOLDERS)
+# 	$(foreach folder, $(COPY_FOLDERS), )
 # # JavaScript concatenation with TypeScript
 # tsfiles = $(shell find client/src/js -name  '*.ts')
 # client/build/js/app.js: $(tsfiles)
