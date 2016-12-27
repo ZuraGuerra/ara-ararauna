@@ -15,6 +15,7 @@ SASS_FILES := $(shell find $(SASS_FOLDER) -name '*.scss')
 #  _T_A_S_K_S_  #
 #               #
 # · all         #
+# · init        #
 # · clean       #
 # · rebuild     #
 # · copy        #
@@ -24,6 +25,11 @@ SASS_FILES := $(shell find $(SASS_FOLDER) -name '*.scss')
 
 ### ALL
 all: copy sass
+
+### INIT
+init:
+	##### Creating source folders...
+	mkdir -p $(SASS_FOLDER) $(SOURCE_FOLDER)/deps $(SOURCE_FOLDER)/img $(SOURCE_FOLDER)/js/templates
 
 ### CLEAN
 clean:
@@ -51,4 +57,4 @@ sass: $(SASS_FILES)
 		  $(addprefix $(BUILD_FOLDER)/css/, $(notdir $(basename $(file))).css);)
 			@# Transforms 'origin/css/example.scss' into 'destination/css/example.css'
 
-.PHONY: clean rebuild all sass copy $(COPY_FOLDERS)
+.PHONY: clean rebuild all sass copy $(COPY_FOLDERS) init
