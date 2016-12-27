@@ -1,2 +1,4 @@
+# ! Change to your build folder location
+build
 # macOS folder config
 .DS_Store
